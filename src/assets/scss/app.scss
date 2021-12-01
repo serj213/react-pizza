@@ -1,6 +1,6 @@
-@import "_variables";
-@import "libs/normalize";
-@import "components/all";
+@import "./variables";
+@import "./libs/normalize";
+@import "./components/all";
 
 
 body {
@@ -78,7 +78,7 @@ body {
     display: flex;
     align-items: center;
     cursor: pointer;
-    @include noselect();
+    // @include noselect();
 
     span {
       display: inline-block;
