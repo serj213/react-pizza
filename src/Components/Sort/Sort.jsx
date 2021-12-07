@@ -7,12 +7,14 @@ const Sort = ({ items }) => {
     const [activeItem, setActiveItem] = React.useState(0);
 
     const toggleActiveSort = () => {
-        setActiveSort(true);
+        setActiveSort(!activeSort);
+        // console.log('fgfg');
     }
 
     const changeActiveItem = index => {
         setActiveItem(index);
         setActiveSort(false);
+        
     }
 
     const outsideClickPopup = (e) => {
@@ -41,7 +43,7 @@ const Sort = ({ items }) => {
                     />
                 </svg>
                 <b>Сортировка по:</b>
-                <span>популярности</span>
+                <span>{items[activeItem]}</span>
             </div>
 
             {
