@@ -6,6 +6,7 @@ const Sort = ({ items }) => {
     const sortRef = useRef()
     const [activeItem, setActiveItem] = React.useState(0);
 
+
     const toggleActiveSort = () => {
         setActiveSort(!activeSort);
         // console.log('fgfg');
@@ -14,7 +15,7 @@ const Sort = ({ items }) => {
     const changeActiveItem = index => {
         setActiveItem(index);
         setActiveSort(false);
-        
+
     }
 
     const outsideClickPopup = (e) => {
