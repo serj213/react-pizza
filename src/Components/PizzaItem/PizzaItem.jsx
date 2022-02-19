@@ -1,7 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 
-const PizzaItem = ({ item }) => {
+const PizzaItem = ({ imageUrl, name, types, sizes, price }) => {
 
 
     const [activeSize, setActiveSize] = React.useState(0);
@@ -24,15 +25,15 @@ const PizzaItem = ({ item }) => {
         <div className="pizza-block">
             <img
                 className="pizza-block__image"
-                src={item.imageUrl}
+                src={imageUrl}
                 alt="Pizza"
             />
-            <h4 className="pizza-block__title">{item.name}</h4>
+            <h4 className="pizza-block__title">{name}</h4>
             <div className="pizza-block__selector">
                 <ul>
 
                     {
-                        item.types.map((item) => {
+                        types.map((item) => {
                             return <li
                                 key={item.id}
                                 onClick={() => changeActiveType(item.id)}
@@ -46,7 +47,7 @@ const PizzaItem = ({ item }) => {
                 <ul>
 
                     {
-                        item.sizes.map((size, index) => {
+                        sizes.map((size, index) => {
                             return <li onClick={() => changeActiveSize(index)} className={activeSize === index ? 'active' : ''} key={index}>{size} см.</li>
                         })
                     }
@@ -54,7 +55,7 @@ const PizzaItem = ({ item }) => {
                 </ul>
             </div>
             <div className="pizza-block__bottom">
-                <div className="pizza-block__price">от {item.price} ₽</div>
+                <div className="pizza-block__price">от {price} ₽</div>
                 <div className="button button--outline button--add">
                     <svg
                         width="12"
@@ -75,5 +76,7 @@ const PizzaItem = ({ item }) => {
         </div>
     )
 }
+
+
 
 export default PizzaItem;

@@ -44,7 +44,7 @@ const Sort = ({ items }) => {
                     />
                 </svg>
                 <b>Сортировка по:</b>
-                <span>{items[activeItem]}</span>
+                <span>{items[activeItem].name}</span>
             </div>
 
             {
@@ -52,7 +52,11 @@ const Sort = ({ items }) => {
                     <ul>
                         {
                             items.map((item, index) => {
-                                return <li key={index} className={`${activeItem === index && 'active'}`} onClick={() => changeActiveItem(index)} >{item}</li>
+                                return <li key={index}
+                                    className={`${activeItem === index && 'active'}`}
+                                    onClick={() => changeActiveItem(index)} >
+                                    {item.name}
+                                </li>
                             })
                         }
                     </ul>
