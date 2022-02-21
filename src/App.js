@@ -1,58 +1,68 @@
 import React from 'react';
 import axios from 'axios';
+import { connect } from 'react-redux';
+import { setPizzas, setLoaded } from './redux/actions/pizzas';
 
 import Header from './Components/Header/Header';
-import Categories from './Components/Header/Categories/Categories';
-import Sort from './Components/Sort/Sort';
-import { PizzaItem } from './Components/index';
+import Home from './Components/Home/Home';
+import Loader from './Components/Loader/Loader';
 
-function App() {
 
-  const [pizzas, setPizzas] = React.useState([])
 
-  React.useEffect(() => {
+class App extends React.Component {
+
+
+  componentDidMount() {
+
     axios.get('http://localhost:3001/pizzas').then(({ data }) => {
-      setPizzas(data);
+      this.props.setPizzasGet(data)
+    }).finally(() => {
+      this.props.changeLoaded(false);
+      console.log('dfdf');
     })
+  }
 
-  }, [])
+  render() {
+
+    console.log('this.props.isLoaded', this.props.isLoaded);
+
+    return (
+      <>
+        <div className="wrapper">
+
+          {
+            this.props.isLoaded ? <Loader />
+              :
+              <>
+                <Header />
+                <Home items={this.props.items} />
+              </>
+          }
 
 
 
-  return (
-    <>
-      <div className="wrapper">
-
-        <Header />
-
-        <div className="content">
-          <div className="container">
-            <div className="content__top">
-
-              <Categories />
-
-              <Sort items={[
-                { name: 'популярности', type: 'popular' },
-                { name: 'цене', type: 'price' },
-                { name: 'алфавиту', type: 'alphabet' }
-              ]} />
-            </div>
-            <h2 className="content__title">Все пиццы</h2>
-            <div className="content__items">
-
-              {
-                pizzas.map((item, index) => {
-                  return <PizzaItem key={index} {...item} />
-                })
-              }
-
-            </div>
-          </div>
         </div>
-      </div>
 
-    </>
-  );
+      </>
+    )
+  }
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    items: state.pizzas.items,
+    isLoaded: state.pizzas.isLoaded
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    setPizzasGet: (items) => dispatch(setPizzas(items)),
+    changeLoaded: (boolean) => dispatch(setLoaded(boolean))
+  }
+}
+
+
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
