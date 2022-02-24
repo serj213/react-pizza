@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 
-const Sort = ({ items }) => {
+const Sort = React.memo(({ items }) => {
 
     const [activeSort, setActiveSort] = React.useState(false);
     const sortRef = useRef()
@@ -67,6 +67,6 @@ const Sort = ({ items }) => {
         </div>
     )
 
-}
+})
 
 export default Sort;

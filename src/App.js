@@ -1,43 +1,35 @@
 import React from 'react';
-import axios from 'axios';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { setPizzas, setLoaded } from './redux/actions/pizzas';
+import { setLoaded, fetchPizzas } from './redux/actions/pizzas';
 
 import Header from './Components/Header/Header';
 import Home from './Components/Home/Home';
 import Loader from './Components/Loader/Loader';
+import Basket from './Components/Basket/Basket';
 
 
 
-const App = props => {
+const App = () => {
 
   const dispatch = useDispatch();
-  const state = useSelector(({ pizzas }) => {
-    return {
-      items: pizzas.items,
-      isLoaded: pizzas.isLoaded
-    }
-  })
+  const isLoaded = useSelector(({ pizzas }) => pizzas.isLoaded)
 
   React.useEffect(() => {
-    axios.get('http://localhost:3001/pizzas').then(({ data }) => {
-      dispatch(setPizzas(data))
-    }).finally(() => {
-      dispatch(setLoaded(false));
-    })
+    dispatch(fetchPizzas())
   }, [])
 
   return (
     <div className="wrapper">
-      {
-        state.isLoaded ? <Loader />
-          :
-          <>
-            <Header />
-            <Home items={state.items} />
-          </>
-      }
+      <Router>
+        <Header />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/basket" element={<Basket />} />
+        </Routes>
 
+
+      </Router>
     </div>
   )
 }
